@@ -20,13 +20,13 @@
         <div class='container'>
             {% for info in main_data %}
             <div class="horoscope-card">
-                {{ info.svg|safe }}
+                <div class="picture">{{ info.svg|safe }}</div>
                 <h2 class="horoscope-name">{{ info.zodiac_ru|title }}</h2>
                 <p class="horoscope-date">{{ info.start_day }} - {{ info.end_day }}</p>
                 <a href="/{{ info.zodiac_en }}" class="btn horoscope-button">Смотреть гороскоп</a>
             </div>
             {% endfor %}
         </div>
-        <script src="" async defer></script>
+        <script src="{% static 'js/script.js' %}" async defer></script>
     </body>
 </html>

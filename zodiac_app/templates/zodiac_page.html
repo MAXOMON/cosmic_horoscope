@@ -18,11 +18,13 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div class="container">
-            {{ zodiac_data.svg|safe }}
-            <h1>{{ zodiac_data.zodiac_ru|title }}</h1>
-            {{ html_description|safe }}
-            <a href="/" class="btn horoscope-button">На главную</a>
+            <div class="horoscope-page">
+                <div class="picture">{{ zodiac_data.svg|safe }}</div>
+                <h1>{{ zodiac_data.zodiac_ru|title }}</h1>
+                {{ html_description|safe }}
+                <a href="/" class="btn horoscope-button">На главную</a>
+            </div>
         </div>
-        <script src="" async defer></script>
+        <script src="{% static 'js/script.js' %}" async defer></script>
     </body>
 </html>

@@ -4,13 +4,14 @@ body {
     color: #fff;
     margin: 0;
     overflow-x: hidden;
-    height: 100vh;
+    height: 100%;
   }
   
   .container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    text-align: center;
     padding: 20px;
     min-height: 100vh;
     box-sizing: border-box;
@@ -34,6 +35,26 @@ body {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
   }
   
+  .picture {
+    display: block;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  svg {
+    object-fit: contain;
+    scale: 70%;
+  }
+
+  .horoscope-page {
+    display: block;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+  }
+
   @media (max-width: 768px) {
     .horoscope-card {
       width: calc(50% - 20px);
@@ -46,45 +67,23 @@ body {
     }
   }
   
-  .horoscope-icon {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 15px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    font-size: 2rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s ease;
-  }
-  
-  .horoscope-icon:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-  }
-  
-  .horoscope-icon svg {
-    width: 50px;
-    height: 50px;
-  }
-  
   .horoscope-name {
     margin-bottom: 5px;
     color: #fff;
     font-weight: bolder;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    text-align: center;
   }
   
   .horoscope-date {
     color: #eee;
     margin-bottom: 15px;
     font-style: italic;
+    text-align: center;
   }
   
   .horoscope-button {
-    background-color: #6a5acd;
+    background-color: #c200b879;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -95,10 +94,11 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     text-decoration: none;
     display: inline-block;
+    text-align: center;
   }
   
   .horoscope-button:hover {
-    background-color: #7b68ee;
+    background-color: #b418d3;
   }
   
   /* Animations */
@@ -110,19 +110,27 @@ body {
   .horoscope-card {
     animation: fadeIn 1s ease-out forwards;
   }
+
+  .container p {
+    text-align: center;
+    max-width: 800px;
+  }
   
   /* Starry background */
   .star {
     position: absolute;
-    background-color: white;
     border-radius: 50%;
-    animation: twinkle 2s infinite;
+    background-color: white;
+    animation: twinkle 1s infinite alternate;
   }
   
   @keyframes twinkle {
-    0% { opacity: 0.8; }
-    50% { opacity: 0.3; }
-    100% { opacity: 0.8; }
+    0% {
+      opacity: 0.7;
+    }
+    100% {
+      opacity: 1;
+    }
   }
   
   /* Single horoscope styles */

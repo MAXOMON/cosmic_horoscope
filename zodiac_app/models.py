@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, connection
 from .zodiac_signs import zodiac_data
 
 class ZodiacSign(models.Model):
@@ -10,6 +10,11 @@ class ZodiacSign(models.Model):
 
     def __str__(self):
         return self.zodiac_en
+    
+    @classmethod
+    def truncate(cls):
+        with connection.cursor() as cursor:
+            cursor.execute(f'TRUNCATE TABLE "{cls._meta.db_table}" CASCADE;')
 
 def bulk_create_zodiac_signs():
     zodiac_signs = [
