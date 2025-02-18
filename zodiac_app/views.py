@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import ZodiacSign
 from asgiref.sync import sync_to_async
 from .utils import fetch_horoscope
+from .weather_app import async_get_weather
 
 
 @sync_to_async
@@ -10,11 +11,15 @@ def get_all_zodiac_signs():
 
 async def index(request):
     main_data = await get_all_zodiac_signs()
+    weather_data = await async_get_weather()
+
     return render(
         request,
         template_name='index.html',
         context={'title': 'Ваш гороскоп - все знаки зодиака',
-                 'main_data': main_data}
+                 'main_data': main_data,
+                 'weather_data': weather_data}
+        
     )
 
 @sync_to_async
