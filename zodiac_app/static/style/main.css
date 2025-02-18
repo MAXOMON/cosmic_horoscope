@@ -173,3 +173,20 @@ body {
       font-size: 1rem;
     }
   }
+
+.header {
+  display: flex;
+  background-color: #000428;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.header h1 {
+  margin: 10px;
+  padding: 20px;
+}
+
+.weather-widget {
+  margin: 10px;
+  padding: 20px;
+}

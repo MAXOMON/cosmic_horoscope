@@ -4,6 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 {% load static %}
+{% load weather_filters %}
 <html lang='ru'>
     <head>
         <meta charset="utf-8">
@@ -17,6 +18,19 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <div class='header'>
+            <h1>Космический гороскоп</h1>
+            <div class='weather-widget'>
+                <div class='weather-main'>{{ weather_data.main }}</div>
+                <div class='weather-description'>{{ weather_data.description }}</div>
+                <div class='weather-temperature'>{{ weather_data.temperature }}</div>
+                <div class='weather-feels-like'>{{ weather_data.feels_like }}</div>
+                <div class='weather-pressure'><p>{{ weather_data.pressure|convert_to_mm_of_mercury }} мм.рт.ст.</p></div>
+                <div class='weather-humidity'>{{ weather_data.humidity }}</div>
+                <div class='weather-wind-speed'>{{ weather_data.wind_speed }}</div>
+                <div class='weather-wind-degrees'>{{ weather_data.wind_degrees }}</div>
+            </div>
+        </div>
         <div class='container'>
             {% for info in main_data %}
             <div class="horoscope-card">

@@ -7,6 +7,13 @@ from datetime import timedelta
 from django.utils.timezone import datetime
 
 
+cities = {
+    "St. Petersburg": {
+        "lat": 59.938732,
+        "lon": 30.316229
+        }
+    }
+
 
 async def async_get_weather(city="St. Petersburg"):
     result = await get_weather()
@@ -18,9 +25,12 @@ async def async_get_weather(city="St. Petersburg"):
             load_dotenv()
             url = os.getenv("URL")
             appid = os.getenv("APPID")
+            lat = cities[city]['lat']
+            lon = cities[city]['lon']
+            units = "metric"
             response = await client.get(
                     url=url,
-                    params={'q': city, "APPID": appid}
+                    params={'lat': lat, 'lon': lon, "APPID": appid, 'units': units}
                 )
             weather_json = response.json()
             await append_weather(weather_json)
