@@ -173,3 +173,19 @@ body {
       font-size: 1rem;
     }
   }
+
+.header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.header h1 {
+  margin: 10px;
+  padding: 20px;
+}
+
+.weather-widget {
+  margin: 10px;
+  padding: 20px;
+}

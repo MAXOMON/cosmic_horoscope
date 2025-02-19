@@ -36,14 +36,16 @@ def bulk_create_zodiac_signs():
 
 class Weather(models.Model):
     main = models.CharField(max_length=20)
-    description = models.CharField(max_length=50, null=True, blank=True, default=None)
-    temperature = models.FloatField(null=False)
-    feels_like = models.FloatField(null=True, blank=True, default=None)
+    description = models.CharField(max_length=50)
+    icon = models.CharField(max_length=20, default="50n")
+    temperature = models.FloatField()
+    feels_like = models.FloatField()
     pressure = models.IntegerField()
     humidity = models.IntegerField()
     wind_speed = models.IntegerField()
     wind_degrees = models.IntegerField()
     date = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return self.main
@@ -53,6 +55,7 @@ def append_weather(weather_json):
     Weather.objects.create(
             main=weather_json['weather'][0]['main'],
             description=weather_json['weather'][0]['description'],
+            icon=weather_json['weather'][0]['icon'],
             temperature=weather_json['main']['temp'],
             feels_like=weather_json['main']['feels_like'],
             pressure=weather_json['main']['pressure'],

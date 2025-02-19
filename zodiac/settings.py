@@ -70,6 +70,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'zodiac.wsgi.application'
+ASGI_APPLICATION = 'zodiac.asgi.application'
 
 
 # Database

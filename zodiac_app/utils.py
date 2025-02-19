@@ -45,5 +45,3 @@ async def fetch_horoscope(zodiac_en='cancer'):
     # creating paragraphs
     paragraphs = ''.join([f'<p>{line}</p>' for line in text_lines])
     return paragraphs
-
-

@@ -28,9 +28,10 @@ async def async_get_weather(city="St. Petersburg"):
             lat = cities[city]['lat']
             lon = cities[city]['lon']
             units = "metric"
+            lang = 'ru'
             response = await client.get(
                     url=url,
-                    params={'lat': lat, 'lon': lon, "APPID": appid, 'units': units}
+                    params={'lat': lat, 'lon': lon, "APPID": appid, 'units': units, 'lang': lang}
                 )
             weather_json = response.json()
             await append_weather(weather_json)
