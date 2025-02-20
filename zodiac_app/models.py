@@ -1,8 +1,6 @@
 from django.utils.timezone import now
-from django.db import models, connection
+from django.db import models, connection, transaction
 from .zodiac_signs import zodiac_data
-from asgiref.sync import sync_to_async
-
 
 
 class ZodiacSign(models.Model):
@@ -31,7 +29,7 @@ def bulk_create_zodiac_signs():
         ) for data in zodiac_data
     ]
 
-    ZodiacSign.objects.bulk_create(zodiac_signs)
+    ZodiacSign.objects.abulk_create(zodiac_signs)
 
 
 class Weather(models.Model):
@@ -50,9 +48,9 @@ class Weather(models.Model):
     def __str__(self):
         return self.main
 
-@sync_to_async
-def append_weather(weather_json):
-    Weather.objects.create(
+async def append_weather(weather_json):
+    async with transaction.atomic():
+        await Weather.objects.acreate(
             main=weather_json['weather'][0]['main'],
             description=weather_json['weather'][0]['description'],
             icon=weather_json['weather'][0]['icon'],
@@ -62,8 +60,8 @@ def append_weather(weather_json):
             humidity=weather_json['main']['humidity'],
             wind_speed=weather_json['wind']['speed'],
             wind_degrees=weather_json['wind']['deg']
-    )
+            )
 
-@sync_to_async
-def get_weather():
-    return Weather.objects.last()
+async def get_weather():
+    result = await Weather.objects.alast()
+    return result

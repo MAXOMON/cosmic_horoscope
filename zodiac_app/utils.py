@@ -1,3 +1,4 @@
+import asyncio
 import httpx
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
@@ -33,7 +34,7 @@ async def fetch_horoscope(zodiac_en='cancer'):
         )
 
     # parsing response with BeautifulSoup
-    soup = BeautifulSoup(response.text, 'html.parser')
+    soup = await asyncio.to_thread(BeautifulSoup, response.text, 'html.parser')
     main_content = soup.find('main', itemprop='articleBody')
 
     # extraction text from target element
