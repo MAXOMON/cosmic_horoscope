@@ -27,12 +27,12 @@ body {
     margin: 10px;
     box-sizing: border-box;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(212, 212, 212, 0.1);
   }
   
   .horoscope-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    transform: translate();
+    box-shadow: 0px 0px 5px 1px rgba(93, 104, 101, 0.959)
   }
   
   .picture {
@@ -50,9 +50,17 @@ body {
 
   .horoscope-page {
     display: block;
-    margin: 0 auto;
+    margin: 50px auto;
     justify-content: center;
     align-items: center;
+  }
+
+  .horoscope-page p {
+    font-size: 20px;
+  }
+
+  .horoscope-page .horoscope-button {
+    margin-top: 40px;
   }
 
   @media (max-width: 768px) {
@@ -181,11 +189,63 @@ body {
 }
 
 .header h1 {
-  margin: 10px;
-  padding: 20px;
+  margin: 0px 0px 0px 50px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 90px;
+  font-weight: 100;
+  align-self: center;
+  background: -webkit-linear-gradient(rgb(255, 255, 255), rgba(228, 255, 255, 0.767));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .weather-widget {
-  margin: 10px;
-  padding: 20px;
+  margin-top: 40px;
+  padding: 0px 50px 0px 0px;
+  display: flexbox;
+  min-width: 300px;
+  max-width: 350px;
+  justify-content: space-between;
+  height:200px;
+}
+
+.weather-container-1 {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.weather-container-2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: end;
+
+}
+.weather-main {
+  display: flex;
+  font-size: 21px;
+;
+  
+}
+.weather-pressure {
+  display: flex;
+}
+.weather-container-3 {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.weather-temperature {
+  display: flex;
+  font-size: 50px;
+}
+
+.weather-container-4 {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+  margin: 0 0;
 }
