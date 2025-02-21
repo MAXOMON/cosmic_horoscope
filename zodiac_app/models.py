@@ -1,5 +1,5 @@
 from django.utils.timezone import now
-from django.db import models, connection, transaction
+from django.db import models, connection
 from .zodiac_signs import zodiac_data
 
 
@@ -49,18 +49,17 @@ class Weather(models.Model):
         return self.main
 
 async def append_weather(weather_json):
-    async with transaction.atomic():
-        await Weather.objects.acreate(
-            main=weather_json['weather'][0]['main'],
-            description=weather_json['weather'][0]['description'],
-            icon=weather_json['weather'][0]['icon'],
-            temperature=weather_json['main']['temp'],
-            feels_like=weather_json['main']['feels_like'],
-            pressure=weather_json['main']['pressure'],
-            humidity=weather_json['main']['humidity'],
-            wind_speed=weather_json['wind']['speed'],
-            wind_degrees=weather_json['wind']['deg']
-            )
+    await Weather.objects.acreate(
+        main=weather_json['weather'][0]['main'],
+        description=weather_json['weather'][0]['description'],
+        icon=weather_json['weather'][0]['icon'],
+        temperature=weather_json['main']['temp'],
+        feels_like=weather_json['main']['feels_like'],
+        pressure=weather_json['main']['pressure'],
+        humidity=weather_json['main']['humidity'],
+        wind_speed=weather_json['wind']['speed'],
+        wind_degrees=weather_json['wind']['deg']
+        )
 
 async def get_weather():
     result = await Weather.objects.alast()
