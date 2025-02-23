@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import index, zodiac
+from .views import AsyncZodiacView, AsyncIndexView
 
 
 urlpatterns = [
-    path('', index, name='home'),
-    path('<slug:zodiac_name>/', zodiac, name='zodiac'),
+    path('', AsyncIndexView.as_view()),
+    path('<slug:zodiac_name>/', AsyncZodiacView.as_view()),
 ]

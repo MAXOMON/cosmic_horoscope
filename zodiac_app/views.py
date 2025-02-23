@@ -1,34 +1,30 @@
-from django.shortcuts import render
-from .models import ZodiacSign
-from asgiref.sync import sync_to_async
+#from django.shortcuts import render
+from django.template.response import TemplateResponse
+from .models import ZodiacSign, get_all_zodiac_signs, get_zodiac_data
 from .utils import fetch_horoscope
 from .weather_app import async_get_weather
+from django.views import View
 
 
-@sync_to_async
-def get_all_zodiac_signs():
-    return list(ZodiacSign.objects.all())
+class AsyncIndexView(View):
+    async def get(self, request, *args, **kwargs):
+        main_data = await get_all_zodiac_signs()
+        weather_data = await async_get_weather()
+        return TemplateResponse(
+            request,
+            'index.html',
+            context={
+                'title': 'Ваш гороскоп - все знаки зодиака',
+                'main_data': main_data,
+                'weather_data': weather_data
+            }
+        )
 
-async def index(request):
-    main_data = await get_all_zodiac_signs()
-    weather_data = await async_get_weather()
+class AsyncZodiacView(View):
 
-    return render(
-        request,
-        template_name='index.html',
-        context={'title': 'Ваш гороскоп - все знаки зодиака',
-                 'main_data': main_data,
-                 'weather_data': weather_data}
-        
-    )
-
-@sync_to_async
-def get_zodiac_data(zodiac_name):
-    return ZodiacSign.objects.get(zodiac_en=zodiac_name)
-
-async def zodiac(request, zodiac_name):
-    zodiac_data = await get_zodiac_data(zodiac_name)
-    html_description = await fetch_horoscope(zodiac_name)
-    return render(request, 'zodiac_page.html',
+    async def get(self, request, zodiac_name, *args, **kwargs):
+        zodiac_data = await get_zodiac_data(zodiac_name)
+        html_description = await fetch_horoscope(zodiac_name)
+        return TemplateResponse(request, 'zodiac_page.html',
                   {'title': zodiac_name, 'zodiac_data': zodiac_data,
                    'html_description': html_description})

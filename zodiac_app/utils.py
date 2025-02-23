@@ -4,6 +4,10 @@ from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 
 
+async def async_get_lines(text: str):
+    for line in text:
+        yield line
+
 async def fetch_horoscope(zodiac_en='cancer'):
     # create Fake User Agent
     ua = UserAgent()
@@ -44,5 +48,6 @@ async def fetch_horoscope(zodiac_en='cancer'):
     ).splitlines()
 
     # creating paragraphs
-    paragraphs = ''.join([f'<p>{line}</p>' for line in text_lines])
+    #paragraphs = ''.join([f'<p>{line}</p>' for line in text_lines])
+    paragraphs = ''.join([f'<p>{line}</p>' async for line in async_get_lines(text_lines)])
     return paragraphs

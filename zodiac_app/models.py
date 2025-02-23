@@ -1,6 +1,6 @@
 from django.utils.timezone import now
 from django.db import models, connection
-from .zodiac_signs import zodiac_data
+from asgiref.sync import sync_to_async
 
 
 class ZodiacSign(models.Model):
@@ -18,19 +18,12 @@ class ZodiacSign(models.Model):
         with connection.cursor() as cursor:
             cursor.execute(f'TRUNCATE TABLE "{cls._meta.db_table}" CASCADE;')
 
-def bulk_create_zodiac_signs():
-    zodiac_signs = [
-        ZodiacSign(
-            zodiac_ru=data['zodiac_ru'],
-            zodiac_en=data['zodiac_en'],
-            start_day=data['start_day'],
-            end_day=data['end_day'],
-            svg=data['svg']
-        ) for data in zodiac_data
-    ]
+@sync_to_async
+def get_all_zodiac_signs():
+    return list(ZodiacSign.objects.all())
 
-    ZodiacSign.objects.abulk_create(zodiac_signs)
-
+async def get_zodiac_data(zodiac_name):
+    return await ZodiacSign.objects.aget(zodiac_en=zodiac_name)
 
 class Weather(models.Model):
     main = models.CharField(max_length=20)
@@ -43,7 +36,6 @@ class Weather(models.Model):
     wind_speed = models.IntegerField()
     wind_degrees = models.IntegerField()
     date = models.DateTimeField(auto_now_add=True)
-
 
     def __str__(self):
         return self.main

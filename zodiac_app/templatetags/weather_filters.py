@@ -64,11 +64,11 @@ def to_wind_description(val: int) -> str:
         return "Cеверо-Восточный"
     elif val == 90:
         return "Восточный"
-    elif 91 < val < 180:
+    elif 90 < val < 180:
         return "Юго-Восточный"
-    elif val == 90:
+    elif val == 180:
         return "Южный"
-    elif 90 < val < 270:
+    elif 180 < val < 270:
         return "Юго-Западный"
     elif val == 270:
         return "Западный"
