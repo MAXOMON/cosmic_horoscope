@@ -29,12 +29,12 @@ CMD ["uvicorn", "zodiac.asgi:application", "--host", "0.0.0.0", "--port", "8000"
 #docker-compose.yml:
 
 =================================================================================
-env_file:
-  - .env
 
 services:
   db:
     image: postgres:13
+    env_file:
+      - .env
     hostname: ${DB_HOSTNAME}
     environment:
       POSTGRES_DB: ${DB_NAME}
