@@ -1,7 +1,9 @@
 import asyncio
+from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
+from .models import get_all_zodiac_signs, add_description_to_horoscope_sign
 
 
 async def async_get_lines(text: str):
@@ -48,6 +50,20 @@ async def fetch_horoscope(zodiac_en='cancer'):
     ).splitlines()
 
     # creating paragraphs
-    #paragraphs = ''.join([f'<p>{line}</p>' for line in text_lines])
     paragraphs = ''.join([f'<p>{line}</p>' async for line in async_get_lines(text_lines)])
     return paragraphs
+
+async def get_all_signs():
+    all_signs = await get_all_zodiac_signs()
+    date_today = datetime.today().strftime('%Y-%m-%d')
+    date = all_signs[0].last_updated
+    if str(date_today) == str(date):
+        return all_signs
+    names_of_signs = [it.zodiac_en for it in all_signs]
+    new_data = {name:await fetch_horoscope(name) for name in names_of_signs}
+    for zodiac_sign, description in new_data.items():
+        await add_description_to_horoscope_sign(
+            zodiac_name=zodiac_sign,
+            description=description
+        )
+    return await get_all_zodiac_signs()

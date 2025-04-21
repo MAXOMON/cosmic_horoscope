@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
 {% load static %}
 {% load weather_filters %}
 <html lang='ru'>
@@ -22,7 +22,7 @@
             <h1>Космический гороскоп</h1>
             <div class='weather-widget'>
                 <div class='weather-container-1'>
-                    <div class='weather-icon'><img src="{% static 'img/'|add:weather_data.icon|add:'.png' %}"></img></img></div>
+                    <div class='weather-icon'><img src="{% static 'img/weather/'|add:weather_data.icon|add:'.png' %}"></img></img></div>
                     <div class='weather-container-2'>
                         <div class='weather-main'>{{ weather_data.description }}</div>
                         <div class='weather-pressure'>{{ weather_data.pressure|convert_to_mm_of_mercury }}</div>
@@ -42,7 +42,8 @@
         <div class='container'>
             {% for info in main_data %}
             <div class="horoscope-card">
-                <div class="picture">{{ info.svg|safe }}</div>
+                <!--<div class="picture">{{ info.svg|safe }}</div> -->
+                <div class="picture"><img src="{% static 'img/horoscope/'|add:info.zodiac_en|add:'.svg' %}" height="150" width="150"></img></div>
                 <h2 class="horoscope-name">{{ info.zodiac_ru|title }}</h2>
                 <p class="horoscope-date">{{ info.start_day }} - {{ info.end_day }}</p>
                 <a href="/{{ info.zodiac_en }}" class="btn horoscope-button">Смотреть гороскоп</a>

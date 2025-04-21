@@ -19,7 +19,8 @@
         <![endif]-->
         <div class="container">
             <div class="horoscope-page">
-                <div class="picture">{{ zodiac_data.svg|safe }}</div>
+                <!--<div class="picture">{{ zodiac_data.svg|safe }}</div>-->
+                <div class="picture"><img src="{% static 'img/horoscope/'|add:zodiac_data.zodiac_en|add:'.svg' %}"></img></div>
                 <h1>{{ zodiac_data.zodiac_ru|title }}</h1>
                 {{ html_description|safe }}
                 <a href="/" class="btn horoscope-button">На главную</a>

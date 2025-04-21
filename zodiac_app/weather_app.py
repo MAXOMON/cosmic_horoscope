@@ -2,7 +2,7 @@ import httpx
 import os
 import pytz
 from dotenv import load_dotenv
-from .models import Weather, append_weather, get_weather
+from .models import append_weather, get_weather
 from datetime import timedelta
 from django.utils.timezone import datetime
 

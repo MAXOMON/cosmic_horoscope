@@ -1,4 +1,3 @@
-from django.utils.timezone import now
 from django.db import models, connection
 from asgiref.sync import sync_to_async
 
@@ -8,7 +7,8 @@ class ZodiacSign(models.Model):
     zodiac_en = models.CharField(max_length=50, unique=True)
     start_day = models.CharField(max_length=20, unique=True)
     end_day = models.CharField(max_length=20, unique=True)
-    svg = models.TextField()
+    last_updated = models.DateField(auto_now=True)
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return self.zodiac_en
@@ -24,6 +24,10 @@ def get_all_zodiac_signs():
 
 async def get_zodiac_data(zodiac_name):
     return await ZodiacSign.objects.aget(zodiac_en=zodiac_name)
+
+async def add_description_to_horoscope_sign(zodiac_name, description: str):
+    await ZodiacSign.objects.filter(zodiac_en=zodiac_name).aupdate(description=description)
+
 
 class Weather(models.Model):
     main = models.CharField(max_length=20)

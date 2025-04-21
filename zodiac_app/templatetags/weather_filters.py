@@ -12,28 +12,6 @@ def convert_to_mm_of_mercury(pressure):
     except (ValueError, TypeError):
         return pressure
 
-"""
-@register.filter
-def convert_description_to_rus(description: str) -> str:
-    weather_main = {
-        'Clear': 'Яcно',
-        'Clear sky': 'Ясно',
-        'Few clouds': 'Немного облачно',
-        'Scattered clouds': 'Умеренно облачно',
-        'Broken clouds': 'Облачно',
-        'Shower rain': 'Ливень',
-        'Rain': 'Дождь',
-        'Thunderstorm': 'Гроза',
-        'Snow': 'Cнегопад',
-        'Mist': 'Туман',
-        'Clouds': 'Облачно'
-    }
-    try:
-        return weather_main[description]
-    except (ValueError, TypeError):
-        return description
-"""
-
 @register.filter
 def convert_to_degrees_of_temperature(val: float) -> str:
     try:
