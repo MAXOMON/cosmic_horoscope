@@ -22,8 +22,6 @@
     >
     >EXPOSE 8000
     >
-    >RUN python manage.py loaddata zodiac_app/fixtures/zodiac_app.json --app zodiac_app
-    >
     >CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "zodiac.asgi:application", "--bind", "0.0.0.0:8000"]
     >
 
@@ -39,10 +37,46 @@
     >python -c 'import random'
     >result = "".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)") for i in range(50)])
 
+4. Настройте docker-compose.yml
+    >```
+    >
+    >services:
+    >web:
+    >    build: .
+    >    command: ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "zodiac.asgi:application", "--bind", "0.0.0.0:8000"]
+    >    volumes:
+    >    - .:/zodiac
+    >    ports:
+    >    - "8000:8000"
+    >    depends_on:
+    >    - redis
+    >    - celery
+    >    - celery-beat
+    >
+    >redis:
+    >    image: "redis:alpine"
+    >    ports:
+    >    - "6379:6379"
+    >
+    >celery:
+    >    build: .
+    >    command: ["celery", "-A", "zodiac", "worker", "--loglevel=info"]
+    >    volumes:
+    >    - .:/zodiac
+    >    depends_on:
+    >    - redis
+    >    
+    >celery-beat:
+    >    build: .
+    >    command: ["celery", "-A", "zodiac", "beat", "--loglevel=info"]
+    >    volumes:
+    >    - .:/zodiac
+    >    depends_on:
+    >    - redis
 
-4. Запустите приложение с использованием docker run:
-    ```cmd
-    docker run -d -p 8000:8000 $(docker build -q .)
+5. Запустите приложение с использованием docker-compose:
+    >```cmd
+    >docker-compose up --build
 
 # Переходим на localhost:8000/ и получаем:
 

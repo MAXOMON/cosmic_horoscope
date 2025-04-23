@@ -11,7 +11,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>{{ title }}</title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link type="text/css" rel="stylesheet" href="{% static 'style/main.css' %}">
     </head>
     <body>
@@ -19,7 +19,9 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div class='header'>
-            <h1>Космический гороскоп</h1>
+            <div class="title">
+                <h1>Космический гороскоп</h1>
+            </div>
             <div class='weather-widget'>
                 <div class='weather-container-1'>
                     <div class='weather-icon'><img src="{% static 'img/weather/'|add:weather_data.icon|add:'.png' %}"></img></img></div>

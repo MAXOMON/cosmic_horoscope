@@ -2,29 +2,111 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(to bottom, #000428, #004e92);
     color: #fff;
-    margin: 0;
+    margin: auto;
     overflow-x: hidden;
     height: 100%;
+    width: 100%;
+    max-width: 1600px;
+    justify-content: space-between;
+    align-items: center;
+
   }
   
-  .container {
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .header h1 {
+    margin-left: 20px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 75px;
+    font-weight: 100;
+    align-self: center;
+    background: -webkit-linear-gradient(rgb(255, 255, 255), rgba(228, 255, 255, 0.767));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .title {
+    flex: 1 1 calc(60%);
+  }
+
+  .weather-widget {
+    flex: 1 1 calc(30%);
+  }
+
+  .weather-widget {
+    margin: 50px 50px 0px 50px;
+    padding: 0px 0px 0px 50px;
+    display: flexbox;
+    min-width: 300px;
+    max-width: 350px;
+    justify-content: space-between;
+    height:200px;
+  }
+
+  .weather-container-1 {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .weather-container-2 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    flex-direction: column;
+    align-items: end;
+
+  }
+  .weather-main {
+    display: flex;
+    font-size: 21px;
+  ;
+    
+  }
+  .weather-pressure {
+    display: flex;
+  }
+  .weather-container-3 {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .weather-temperature {
+    display: flex;
+    font-size: 50px;
+  }
+
+  .weather-container-4 {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+    margin: 0 0;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     min-height: 100vh;
     box-sizing: border-box;
   }
   
   .horoscope-card {
+    flex: 1 1 calc(33.33% - 20px);
+    margin: 10px;
+    padding: 20px;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
-    padding: 20px;
+    
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     text-align: center;
     width: calc(33.333% - 20px);
-    margin: 10px;
     box-sizing: border-box;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     border: 1px solid rgba(212, 212, 212, 0.1);
@@ -63,15 +145,31 @@ body {
     margin-top: 40px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 890px) {
+    .title {
+      display: none;
+    }
+
+    .weather-widget {
+      display: flex;
+      flex: 0 0 100%;
+      margin: auto;
+      padding: auto;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
     .horoscope-card {
-      width: calc(50% - 20px);
+      flex: 1 1 100%;
+      max-width: 95%;
     }
   }
   
   @media (max-width: 480px) {
     .horoscope-card {
       width: 100%;
+      max-width: 95%;
     }
   }
   
@@ -181,71 +279,3 @@ body {
       font-size: 1rem;
     }
   }
-
-.header {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.header h1 {
-  margin: 0px 0px 0px 50px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  font-size: 90px;
-  font-weight: 100;
-  align-self: center;
-  background: -webkit-linear-gradient(rgb(255, 255, 255), rgba(228, 255, 255, 0.767));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.weather-widget {
-  margin-top: 40px;
-  padding: 0px 50px 0px 0px;
-  display: flexbox;
-  min-width: 300px;
-  max-width: 350px;
-  justify-content: space-between;
-  height:200px;
-}
-
-.weather-container-1 {
-  display: inline-flex;
-  justify-content: space-between;
-  width: 100%;
-}
-.weather-container-2 {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  flex-direction: column;
-  align-items: end;
-
-}
-.weather-main {
-  display: flex;
-  font-size: 21px;
-;
-  
-}
-.weather-pressure {
-  display: flex;
-}
-.weather-container-3 {
-  display: inline-flex;
-  justify-content: space-between;
-  width: 100%;
-}
-.weather-temperature {
-  display: flex;
-  font-size: 50px;
-}
-
-.weather-container-4 {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: end;
-  margin: 0 0;
-}

@@ -1,9 +1,8 @@
+import time
 import httpx
 import os
-import pytz
 from dotenv import load_dotenv
-from .models import append_weather, get_weather
-from datetime import timedelta
+from .models import append_weather
 from django.utils.timezone import datetime
 
 
@@ -19,25 +18,22 @@ cities = {
     }
 
 
-async def async_get_weather(city="Murino"):
-    result = await get_weather()
-    timezone = pytz.timezone('Europe/Moscow')
-    if (datetime.now(timezone) - result.date) < timedelta(minutes=15):
-        return result
-    else:
-        async with httpx.AsyncClient() as client:
-            load_dotenv()
-            url = os.getenv("URL")
-            appid = os.getenv("APPID")
-            lat = cities[city]['lat']
-            lon = cities[city]['lon']
-            units = "metric"
-            lang = 'ru'
+async def async_add_weather(city="Murino"):
+    async with httpx.AsyncClient(timeout=300) as client:
+        load_dotenv()
+        url = os.getenv("URL")
+        appid = os.getenv("APPID")
+        lat = cities[city]['lat']
+        lon = cities[city]['lon']
+        units = "metric"
+        lang = 'ru'
+        while True:
             response = await client.get(
                     url=url,
                     params={'lat': lat, 'lon': lon, "APPID": appid, 'units': units, 'lang': lang}
                 )
-            weather_json = response.json()
-            await append_weather(weather_json)
-            result = await get_weather()
-            return result
+            if response.status_code == 200:
+                break
+            time.sleep(1)
+        weather_json = response.json()
+        await append_weather(weather_json)

@@ -1,0 +1,34 @@
+
+services:
+  web:
+    build: .
+    command: ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "zodiac.asgi:application", "--bind", "0.0.0.0:8000"]
+    volumes:
+      - .:/zodiac
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - celery
+      - celery-beat
+  
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+  
+  celery:
+    build: .
+    command: ["celery", "-A", "zodiac", "worker", "--loglevel=info"]
+    volumes:
+      - .:/zodiac
+    depends_on:
+      - redis
+    
+  celery-beat:
+    build: .
+    command: ["celery", "-A", "zodiac", "beat", "--loglevel=info"]
+    volumes:
+      - .:/zodiac
+    depends_on:
+      - redis

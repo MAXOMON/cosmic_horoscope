@@ -1,9 +1,8 @@
 import asyncio
-from datetime import datetime
+import time
 import httpx
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
-from .models import get_all_zodiac_signs, add_description_to_horoscope_sign
 
 
 async def async_get_lines(text: str):
@@ -32,16 +31,21 @@ async def fetch_horoscope(zodiac_en='cancer'):
     }
 
     # async web-request
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=300) as client:
         url = f'https://horo.mail.ru/prediction/{zodiac_en}/today/'
-        response = await client.get(
-            url=url,
-            headers=headers
-        )
-
+        while True:
+            response = await client.get(url=url, headers=headers)
+            if response.status_code == 200:
+                break
+            headers['user-agent'] = ua.random
+            time.sleep(5)
     # parsing response with BeautifulSoup
-    soup = await asyncio.to_thread(BeautifulSoup, response.text, 'html.parser')
-    main_content = soup.find('main', itemprop='articleBody')
+    try:
+        soup = await asyncio.to_thread(BeautifulSoup, response.text, 'html.parser')
+    finally:
+        while (main_content := soup.find('main', itemprop='articleBody')) is None:
+            # to avoid race conditions
+            time.sleep(3)
 
     # extraction text from target element
     text_lines = main_content.get_text(
@@ -52,18 +56,3 @@ async def fetch_horoscope(zodiac_en='cancer'):
     # creating paragraphs
     paragraphs = ''.join([f'<p>{line}</p>' async for line in async_get_lines(text_lines)])
     return paragraphs
-
-async def get_all_signs():
-    all_signs = await get_all_zodiac_signs()
-    date_today = datetime.today().strftime('%Y-%m-%d')
-    date = all_signs[0].last_updated
-    if str(date_today) == str(date):
-        return all_signs
-    names_of_signs = [it.zodiac_en for it in all_signs]
-    new_data = {name:await fetch_horoscope(name) for name in names_of_signs}
-    for zodiac_sign, description in new_data.items():
-        await add_description_to_horoscope_sign(
-            zodiac_name=zodiac_sign,
-            description=description
-        )
-    return await get_all_zodiac_signs()
