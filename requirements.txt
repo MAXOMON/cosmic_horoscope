@@ -1,4 +1,4 @@
-async-timeout==5.0.1
+async-timeout
 wheel==0.45.1
 pytz==2022.1
 beautifulsoup4==4.12.3

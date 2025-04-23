@@ -1,6 +1,6 @@
 # Как установить
 
-1. Установите Docker;
+1. Установите Docker и Docker-compose;
 2. Клонируйте репозиторий или скопируйте файлы;
 
     # Dockerfile:
@@ -76,7 +76,7 @@
 
 5. Запустите приложение с использованием docker-compose:
     >```cmd
-    >docker-compose up --build
+    >docker compose up --build
 
 # Переходим на localhost:8000/ и получаем:
 
